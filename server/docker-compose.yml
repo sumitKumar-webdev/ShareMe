@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  backend:
+    build: .
+    container_name: file_backend
+    ports:
+      - "6001:6001"
+    depends_on:
+      - redis
+    environment:
+      PORT: ${PORT}
+      REDIS_URL: ${REDIS_URL}
+      MONGO_URL: ${MONGO_URL}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+
+volumes:
+  redis-data:

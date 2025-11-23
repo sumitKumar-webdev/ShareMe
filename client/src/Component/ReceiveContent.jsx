@@ -58,7 +58,7 @@ const ReceiveContent = () => {
 
 const handleDownloadAll = () => {
   const a = document.createElement("a");
-  a.href = `${process.env.NEXT_PUBLIC_BACKEND_API}download-all/${shareCode}`;
+  a.href = `${process.env.NEXT_PUBLIC_BACKEND_API}api/download-all/${shareCode}`;
   a.setAttribute("download", "shareMe-files.zip");
   a.click();
 };

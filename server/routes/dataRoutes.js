@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/upload", uploadToCloud.array("files", 5), upload);
 router.post("/get/:key", fetch);
-router.post("/download-all/:key", downloadAll);
+router.get("/download-all/:key", downloadAll);
 
 export default router;

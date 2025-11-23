@@ -50,7 +50,7 @@ const ShareComponent = () => {
   };
 
   return (
-    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#DEDED1] px-3 md:px-8 py-4 h-full">
+    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#DEDED1] px-3 md:px-8 py-4 h-auto">
       <h1 className="text-2xl md:text-4xl font-extrabold text-[#452829] tracking-wide">
         ShareMe
       </h1>

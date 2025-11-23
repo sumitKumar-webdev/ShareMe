@@ -38,18 +38,10 @@ const ReceiveContent = () => {
     }
   };
   const handleDownload = (url, fileName) => {
-    const name = encodeURIComponent(fileName.split(".")[0]);
-    const downloadUrl = url.replace(
-      "/upload/",
-      `/upload/fl_attachment:${name}/`
-    );
-
     const a = document.createElement("a");
-    a.href = downloadUrl;
+    a.href = `${url.replace("/upload/", "/upload/fl_attachment/")}`;
     a.setAttribute("download", fileName);
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
   };
 
   const handleDownloadAll = async () => {
@@ -75,7 +67,7 @@ const ReceiveContent = () => {
     }
   };
   return (
-    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#C5C7BC] px-3 md:px-8 py-4 h-full">
+    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#C5C7BC] px-3 md:px-8 py-4 h-auto">
       <InfoBox
         infoTitle="How it works"
         infoList={[

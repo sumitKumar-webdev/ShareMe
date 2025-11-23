@@ -37,35 +37,33 @@ const ReceiveContent = () => {
       handleFetch();
     }
   };
-  const handleDownload = (url, fileName) => {
-    const a = document.createElement("a");
-    a.href = `${url.replace("/upload/", "/upload/fl_attachment/")}`;
-    a.setAttribute("download", fileName);
-    a.click();
-  };
+  const handleDownload = async (url, fileName) => {
+    try {
+      const response = await fetch(url, { mode: "cors" });
+      const blob = await response.blob();
 
-  const handleDownloadAll = async () => {
-    if (!fetchedContent?.files) return;
-
-    for (const file of fetchedContent.files) {
-      const originalName = file.originalName;
-      const cleanName = encodeURIComponent(originalName.split(".")[0]);
-
-      const downloadUrl = file.url.replace(
-        "/upload/",
-        `/upload/fl_attachment:${cleanName}/`
-      );
-
+      const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.setAttribute("download", originalName);
-
+      a.style.display = "none";
+      a.href = blobUrl;
+      a.download = fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      await new Promise((res) => setTimeout(res, 200));
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Download error:", err);
     }
   };
+
+const handleDownloadAll = () => {
+  const a = document.createElement("a");
+  a.href = `${process.env.NEXT_PUBLIC_BACKEND_API}download-all/${shareCode}`;
+  a.setAttribute("download", "shareMe-files.zip");
+  a.click();
+};
+
+
   return (
     <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#C5C7BC] px-3 md:px-8 py-4 h-auto">
       <InfoBox

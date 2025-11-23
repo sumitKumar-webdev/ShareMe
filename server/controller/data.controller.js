@@ -1,6 +1,8 @@
 import { File } from "../model/File.model.js";
 import { redis } from "../config/redis.js";
 import cryptoRandomString from "crypto-random-string";
+import archiver from "archiver"
+import axios from "axios";
 
 export const upload = async (req, res, next) => {
     try {
@@ -11,7 +13,7 @@ export const upload = async (req, res, next) => {
         }
 
         console.log(files);
-        
+
 
         const fileList = files.map(file => ({
             originalName: file.originalname,
@@ -52,4 +54,37 @@ export const fetch = async (req, res) => {
     }
 }
 
-export default { upload, fetch };
+export const downloadAll = async (req, res) => {
+    try {
+        const { key } = req.params;
+        if (!key) return res.status(400).json({ message: "Key is required", status: false });
+
+        const data = await redis.get(key);
+        if (!data) return res.status(404).json({ message: "Data not found or expired", status: false });
+
+        const { files } = JSON.parse(data);
+
+        res.setHeader("Content-Type", "application/zip");
+        res.setHeader("Content-Disposition", "attachment; filename=\"shareMe-files.zip\"");
+
+        const archive = archiver("zip", { zlib: { level: 9 } });
+        archive.pipe(res);
+
+        for (const file of files) {
+            try {
+                const response = await axios.get(file.url, { responseType: "arraybuffer" });
+                archive.append(response.data, { name: file.originalName });
+            } catch (err) {
+                console.error("Download failed for:", file.url);
+            }
+        }
+
+        archive.finalize();
+    } catch (error) {
+        console.error("ZIP error:", error);
+        res.status(500).json({ message: "Could not download files", status: false });
+    }
+};
+
+
+export default { upload, fetch, downloadAll };

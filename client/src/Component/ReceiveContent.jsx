@@ -27,7 +27,7 @@ const ReceiveContent = () => {
       setFetchedContent(response.data.data);
     } catch (error) {
       console.error(error);
-      showToast(error.response.data.message, "error")
+      showToast(error.response.data.message, "error");
     }
   };
 
@@ -75,7 +75,7 @@ const ReceiveContent = () => {
     }
   };
   return (
-    <div className="w-full md:w-1/2 bg-[#C5C7BC] px-3 md:px-7 py-4 pb-5 min-h-screen md:h-auto">
+    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#C5C7BC] px-3 md:px-8 py-4 h-full">
       <InfoBox
         infoTitle="How it works"
         infoList={[
@@ -95,7 +95,7 @@ const ReceiveContent = () => {
 
       <form
         action=""
-        className="bg-white w-full p-6 rounded-lg shadow-md space-y-3"
+        className="bg-white w-full p-4 md:p-6 rounded-lg shadow-md space-y-3 overflow-x-hidden"
       >
         <InputField
           label="Enter Your Share Code"
@@ -132,7 +132,8 @@ const ReceiveContent = () => {
                   setTimeout(() => setCopied(false), 3000);
                 }
               }}
-              className="absolute top-9 right-4 px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-xs flex items-center gap-1 cursor-pointer"
+              className="absolute top-6 md:top-8 right-2 md:right-4
+ px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-xs flex items-center gap-1 cursor-pointer"
             >
               {copied ? (
                 <div className="flex justify-center items-center gap-1">

@@ -50,7 +50,7 @@ const ShareComponent = () => {
   };
 
   return (
-    <div className="w-full md:w-1/2 bg-[#DEDED1] px-3 md:px-7 py-4 min-h-screen md:h-auto">
+    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#DEDED1] px-3 md:px-8 py-4 h-full">
       <h1 className="text-2xl md:text-4xl font-extrabold text-[#452829] tracking-wide">
         ShareMe
       </h1>
@@ -72,7 +72,7 @@ const ShareComponent = () => {
       </div>
 
       <form
-        className="bg-white w-full p-6 rounded-lg shadow-md space-y-3"
+        className="bg-white w-full p-4 md:p-6 rounded-lg shadow-md space-y-3"
         onSubmit={handleSubmit}
       >
         <TextAreaInput

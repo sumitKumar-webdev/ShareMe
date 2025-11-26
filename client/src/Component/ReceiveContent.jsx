@@ -99,6 +99,7 @@ const handleDownloadAll = () => {
           maxLength={4}
           pattren="^[0-9]{4}$"
           type="number"
+          ariaLabel="Submit"
         />
         <div className="relative">
           <TextAreaInput
@@ -146,7 +147,7 @@ const handleDownloadAll = () => {
 
         <div className="mt-4">
           {!fetchedContent?.files || fetchedContent.files.length === 0 ? (
-            <div className="w-full min-h-55 bg-gray-100 text-gray-500 flex justify-center items-center py-6 rounded-lg border border-dashed border-gray-300">
+            <div className="w-full min-h-55 bg-gray-100 text-gray-600 flex justify-center items-center py-6 rounded-lg border border-dashed border-gray-300">
               Shared files will appear here...
             </div>
           ) : (

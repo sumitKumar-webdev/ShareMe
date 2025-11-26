@@ -51,14 +51,16 @@ const ShareComponent = () => {
 
   return (
     <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#DEDED1] px-3 md:px-8 py-4 h-auto">
-      <h1 className="text-2xl md:text-4xl font-extrabold text-[#452829] tracking-wide">
-        ShareMe
-      </h1>
-      <div>
-        <p className="text-gray-700 text-xs md:text-sm tracking-wide">
-          Share text & files instantly. Secure and easy.
-        </p>
-      </div>
+      <header aria-labelledby="Title">
+        <h1 className="text-2xl md:text-4xl font-extrabold text-[#452829] tracking-wide">
+          ShareMe
+        </h1>
+        <div>
+          <p className="text-gray-700 text-xs md:text-sm tracking-wide">
+            Share text & files instantly. Secure and easy.
+          </p>
+        </div>
+      </header>
 
       <div className="relative py-4 mt-4 md:mt-0 text-center flex items-center justify-center">
         <span className="relative px-4 py-1 text-xl md:text-2xl font-semibold text-[#452829] tracking-wide rounded-lg">

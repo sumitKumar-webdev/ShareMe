@@ -17,6 +17,7 @@ const InputField = ({
   size = "medium",
   maxLength,
   pattern,
+  ariaLabel,
   max,
 }) => {
   return (
@@ -69,6 +70,7 @@ const InputField = ({
           endAdornment: icon ? (
             <InputAdornment position="end">
               <IconButton
+              aria-label={ariaLabel || "actionButton"}
                 onClick={onClick}
                 edge="end"
                 sx={{

@@ -5,7 +5,6 @@ import dataRoutes from "./routes/dataRoutes.js";
 import { connectDB } from "./config/db.js";
 
 dotenv.config();
-connectDB();
 const app = express();
 
 const allowedOrigins = (process.env.CORS_ORIGIN || "")
@@ -30,6 +29,17 @@ app.use(express.json());
 app.use("/api", dataRoutes);
 
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    const port = process.env.PORT || 6001;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();

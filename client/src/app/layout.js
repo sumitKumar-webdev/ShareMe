@@ -31,14 +31,14 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <ToastContainer
-          position="bottom-right"
+          position="top-center"
           newestOnTop
           theme="colored"
           toastStyle={{
-            borderRadius: "16px",
+            borderRadius: "10px",
             minHeight: "44px",
             marginBottom: "12px",
-            maxWidth: "280px",
+            maxWidth: "300px",
             fontSize: "0.88rem",
             padding: "10px 12px",
             overflow: "hidden",

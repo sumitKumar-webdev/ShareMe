@@ -4,7 +4,6 @@ import api from "@/utils/apiService";
 import { showToast } from "@/utils/toast";
 import TextAreaInput from "./TextArea.jsx/TextAreaInput";
 import { UploadBox } from "@/Component/UploadBox/uploadBox";
-import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
 import { Button, CircularProgress } from "@mui/material";
@@ -76,16 +75,22 @@ const ShareComponent = () => {
 
   return (
     <div className="flex h-full min-h-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-white/40 bg-[linear-gradient(180deg,_#e7e6da_0%,_#d9d9cc_100%)] px-3 py-3 shadow-[0_18px_35px_rgba(69,40,41,0.08)] md:px-6 md:py-4">
-      <header aria-labelledby="Title" className="shrink-0">
+      <header aria-labelledby="share-title" className="mb-3 shrink-0">
         <div className="flex items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0 py-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-extrabold tracking-wide text-[#452829] md:text-3xl">
-                ShareMe
-              </h1>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f5f2ea] text-[#452829] shadow-sm">
+                <SendRoundedIcon sx={{ fontSize: "1.05rem" }} />
+              </div>
+              <h2
+                id="share-title"
+                className="text-2xl font-extrabold tracking-wide text-[#452829] md:text-3xl"
+              >
+                Share
+              </h2>
             </div>
-            <p className="text-xs tracking-wide text-gray-700 md:text-sm">
-              Share text & files instantly. Secure and easy.
+            <p className="mt-1 text-xs tracking-wide text-gray-700 md:text-sm">
+              Enter text or upload files to generate a 4-digit share code.
             </p>
           </div>
 
@@ -102,13 +107,6 @@ const ShareComponent = () => {
           )}
         </div>
       </header>
-
-      <div className="py-2 text-center md:py-3">
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/55 px-4 py-1.5 text-lg font-semibold tracking-wide text-[#452829] shadow-sm md:text-xl">
-          <SendRoundedIcon sx={{ fontSize: "1rem" }} />
-          Share Content
-        </span>
-      </div>
 
       <form
         className="flex min-h-0 flex-1 flex-col rounded-xl border border-[#452829]/8 bg-[linear-gradient(180deg,_#fffdfa_0%,_#ffffff_100%)] p-4 shadow-md md:p-5"

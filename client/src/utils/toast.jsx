@@ -3,17 +3,18 @@ import { toast } from "react-toastify";
 export const showToast = (
   message,
   type = "success",
-  position = "top-right",
+  position = "bottom-right",
   toastId = null,
   isLoading = false
 ) => {
   const config = {
     position,
     autoClose: isLoading ? false : 3000,
-    hideProgressBar: false,
+    hideProgressBar: isLoading,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
+    closeButton: !isLoading,
   };
 
   if (toastId) {

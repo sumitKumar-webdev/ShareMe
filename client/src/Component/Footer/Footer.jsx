@@ -4,21 +4,17 @@ import EmailIcon from "@mui/icons-material/Email";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-gray-900 text-gray-300 py-5 border-t border-gray-700">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-center md:text-left text-sm text-gray-400">
-          I have some other projects to work on, so if something breaks or feels off, feel
-          free to fix it on your own.{" "}
-          <span className="font-semibold text-white">
-            (Looking For Your Fixes)
-          </span>
+    <footer className="w-full border-t border-gray-700 bg-gray-900 py-3 text-gray-300">
+      <div className="mx-auto flex max-w-[1500px] flex-col items-center justify-between gap-3 px-4 md:flex-row">
+        <p className="text-center text-xs text-gray-400 md:text-left md:text-sm">
+          Share text and files quickly with temporary 4-digit access codes.
         </p>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
           <a
             href="https://github.com/sumitKumar-webdev/Share-Me"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-white transition"
+            className="flex items-center gap-2 text-sm transition hover:text-white"
           >
             <GitHubIcon className="w-5 h-5" />
             <span>GitHub</span>
@@ -27,10 +23,10 @@ const Footer = () => {
             href="https://mail.google.com/mail/?view=cm&fs=1&to=sumitkr8178@gmail.com&su=Hello&body=Hi%20Sumit"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-white transition"
+            className="flex items-center gap-2 text-sm transition hover:text-white"
           >
             <EmailIcon className="w-5 h-5" />
-            <span>Contact Me</span>
+            <span>Contact</span>
           </a>
         </div>
       </div>

@@ -30,7 +30,23 @@ export default function RootLayout({ children }) {
         <main>
           {children}
         </main>
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-right"
+          newestOnTop
+          theme="colored"
+          toastStyle={{
+            borderRadius: "16px",
+            minHeight: "44px",
+            marginBottom: "12px",
+            maxWidth: "280px",
+            fontSize: "0.88rem",
+            padding: "10px 12px",
+            overflow: "hidden",
+          }}
+          progressStyle={{
+            height: "4px",
+          }}
+        />
       </body>
     </html>
   );

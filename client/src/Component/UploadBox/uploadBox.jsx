@@ -55,7 +55,7 @@ export const UploadBox = ({
           if (newFiles) handleChange(name, newFiles);
         }}
         className={`
-          border-2 h-30 md:h-55 border-dashed rounded-lg p-6 flex justify-center items-center cursor-pointer 
+          border-2 h-28 md:h-40 border-dashed rounded-lg p-5 flex justify-center items-center cursor-pointer 
           transition-all
           ${
             isDragOver

@@ -28,7 +28,7 @@ const TextAreaInput = ({
         // onBlur={handleBlur(field)}
         rows={style.rows || 5}
         onKeyDown={onkeyDown}
-        className="lg:min-h-[100px] min-h-[50px] border border-gray-300 rounded-lg p-2 w-full hover:border-black focus:border-blue-600 outline-none"
+        className="min-h-[50px] border border-gray-300 rounded-lg p-2 w-full hover:border-black focus:border-blue-600 outline-none md:min-h-[96px]"
       />
     </div>
   );

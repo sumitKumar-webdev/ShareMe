@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 const InfoBox = ({
   buttonContent = "?",
   infoTitle = "",
@@ -10,23 +11,27 @@ const InfoBox = ({
   const [showInfo, setShowInfo] = useState(false);
 
   return (
-    <div className={`w-full md:px-4 py-4.5 relative ${className}`}>
+    <div className={`relative inline-flex shrink-0 ${className}`}>
       <button
         onClick={() => setShowInfo(!showInfo)}
-        className="absolute top-1 right-2 w-7 h-7 flex items-center justify-center 
-               bg-white text-gray-700 rounded-full shadow-md hover:bg-gray-100 
-               transition font-bold border border-gray-300"
+        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-[#fffdf9] text-[#5c4a45] shadow-md transition hover:bg-white"
       >
-        {buttonContent}
+        {buttonContent === "?" ? (
+          <InfoOutlinedIcon sx={{ fontSize: "1rem" }} />
+        ) : (
+          buttonContent
+        )}
       </button>
 
       {showInfo && (
         <div
-          className={`absolute top-10 right-4 md:w-92 bg-white text-gray-700 text-sm 
-                    p-4 rounded-lg shadow-xl border border-gray-200 animate-fade-in z-50 ${boxClass}`}
+          className={`absolute right-0 top-full z-50 mt-2 rounded-xl border border-gray-200 bg-[#fffdfa] p-4 text-sm text-gray-700 shadow-xl animate-fade-in md:w-92 ${boxClass}`}
         >
           {infoTitle && (
-            <h3 className="font-semibold mb-2 text-gray-900">{infoTitle}</h3>
+            <h3 className="mb-2 flex items-center gap-2 font-semibold text-gray-900">
+              <InfoOutlinedIcon sx={{ fontSize: "1rem", color: "#6b4d4e" }} />
+              {infoTitle}
+            </h3>
           )}
           {Array.isArray(infoList) ? (
             <ul className="list-disc list-inside space-y-2">
@@ -40,7 +45,7 @@ const InfoBox = ({
 
           <button
             onClick={() => setShowInfo(false)}
-            className="mt-3 w-full py-1 rounded bg-gray-800 text-white text-xs hover:bg-black transition"
+            className="mt-3 w-full rounded-full bg-[#452829] py-1.5 text-xs text-white transition hover:bg-[#3a2223]"
           >
             Got it
           </button>

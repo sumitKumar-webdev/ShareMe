@@ -3,9 +3,9 @@ import InputField from "./InputField/InputField";
 import {
   ArrowRightAlt,
   Check,
-  Download,
   DownloadRounded,
-  DownloadSharp,
+  DownloadForOfflineRounded,
+  LockOpenRounded,
 } from "@mui/icons-material";
 import TextAreaInput from "./TextArea.jsx/TextAreaInput";
 import api from "@/utils/apiService";
@@ -27,7 +27,7 @@ const ReceiveContent = () => {
       setFetchedContent(response.data.data);
     } catch (error) {
       console.error(error);
-      showToast(error.response.data.message, "error");
+      showToast(error.response?.data?.message || "Unable to fetch content", "error");
     }
   };
 
@@ -37,6 +37,7 @@ const ReceiveContent = () => {
       handleFetch();
     }
   };
+
   const handleDownload = async (url, fileName) => {
     try {
       const response = await fetch(url, { mode: "cors" });
@@ -56,113 +57,121 @@ const ReceiveContent = () => {
     }
   };
 
-const handleDownloadAll = () => {
-  const a = document.createElement("a");
-  a.href = `${process.env.NEXT_PUBLIC_BACKEND_API}api/download-all/${shareCode}`;
-  a.setAttribute("download", "shareMe-files.zip");
-  a.click();
-};
-
+  const handleDownloadAll = () => {
+    const a = document.createElement("a");
+    a.href = `${process.env.NEXT_PUBLIC_BACKEND_API}api/download-all/${shareCode}`;
+    a.setAttribute("download", "shareMe-files.zip");
+    a.click();
+  };
 
   return (
-    <div className="w-full max-w-full overflow-x-hidden md:w-1/2 bg-[#C5C7BC] px-3 md:px-8 py-4 h-auto">
-      <InfoBox
-        infoTitle="How it works"
-        infoList={[
-          "Paste text or add Files and click *Get Share Code* to get Code.",
-          "Enter a 4-digit code shared by your friend.",
-          "The code will be valid for 30 minutes.",
-          "Files auto-delete after 24 hours.",
-        ]}
-      />
-
-      <div className="md:h-7" />
-      <div className="relative py-4 text-center">
-        <span className="relative px-4 py-1 text-xl md:text-2xl font-semibold text-[#452829] tracking-wide rounded-lg">
-          Receive Content
-        </span>
-      </div>
-
-      <form
-        action=""
-        className="bg-white w-full p-4 md:p-6 rounded-lg shadow-md space-y-3 overflow-x-hidden"
-      >
-        <InputField
-          label="Enter Your Share Code"
-          value={shareCode}
-          onChange={(v) => setShareCode(v)}
-          placeholder="Enter share code"
-          icon={<ArrowRightAlt className="w-7 h-7 text-gray/70 mr-2" />}
-          size="small"
-          onClick={handleFetch}
-          onKeyDown={handleKeyDown}
-          maxLength={4}
-          pattren="^[0-9]{4}$"
-          type="number"
-          ariaLabel="Submit"
-        />
-        <div className="relative">
-          <TextAreaInput
-            name="text"
-            label="Shared Text Content"
-            id="sharedText"
-            value={fetchedContent?.text || ""}
-            placeholder="Shared text will appear here..."
-            readOnly
-            ref={textRef}
-          />
-
-          {fetchedContent?.text && (
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText(fetchedContent.text);
-                if (textRef.current) {
-                  textRef.current?.select();
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 3000);
-                }
-              }}
-              className="absolute top-6 md:top-8 right-2 md:right-4
- px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-xs flex items-center gap-1 cursor-pointer"
-            >
-              {copied ? (
-                <div className="flex justify-center items-center gap-1">
-                  <Check className="text-gray-600 w-4! h-4! group-hover:text-black transition" />
-                  <span className="text-gray-700 text-xs group-hover:text-black transition">
-                    Copied
-                  </span>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center gap-1">
-                  <FileCopy className="text-gray-600 w-4! h-4! group-hover:text-black transition" />
-                  <span className="text-gray-700 text-xs group-hover:text-black transition">
-                    Copy
-                  </span>
-                </div>
-              )}
-            </button>
-          )}
+    <div className="flex h-full min-h-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-white/40 bg-[linear-gradient(180deg,_#ccd0c4_0%,_#c1c5b9_100%)] px-3 py-3 shadow-[0_18px_35px_rgba(69,40,41,0.08)] md:px-6 md:py-4">
+      <div className="mb-3 flex shrink-0 items-start justify-between gap-3">
+        <div className="min-w-0 py-1">
+          <div className="flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f5f2ea] text-[#452829] shadow-sm">
+              <LockOpenRounded sx={{ fontSize: "1.05rem" }} />
+            </div>
+            <h2 className="text-2xl font-extrabold tracking-wide text-[#452829] md:text-3xl">
+              Receive
+            </h2>
+          </div>
+          <p className="mt-1 text-xs tracking-wide text-gray-700 md:text-sm">
+            Enter a share code to view text and download files.
+          </p>
         </div>
 
-        <div className="mt-4">
+        <InfoBox
+          className="mt-1"
+          infoTitle="How it works"
+          infoList={[
+            "Paste text or add files and click Get Share Code to create one.",
+            "Enter the 4-digit code shared by your friend.",
+            "The code will be valid for 30 minutes.",
+            "Files auto-delete after 24 hours.",
+          ]}
+        />
+      </div>
+
+      <form className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-[#452829]/8 bg-[linear-gradient(180deg,_#fffdfa_0%,_#ffffff_100%)] p-4 shadow-md md:p-5">
+        <div className="grid shrink-0 gap-3">
+          <InputField
+            label="Enter Your Share Code"
+            value={shareCode}
+            onChange={(v) => setShareCode(v)}
+            placeholder="Enter share code"
+            icon={<ArrowRightAlt className="w-7 h-7 text-gray/70 mr-2" />}
+            size="small"
+            onClick={handleFetch}
+            onKeyDown={handleKeyDown}
+            maxLength={4}
+            pattern="^[0-9]{4}$"
+            type="number"
+            ariaLabel="Submit"
+          />
+
+          <div className="relative">
+            <TextAreaInput
+              name="text"
+              label="Shared Text Content"
+              id="sharedText"
+              value={fetchedContent?.text || ""}
+              placeholder="Shared text will appear here..."
+              readOnly
+              ref={textRef}
+              style={{ rows: 4 }}
+            />
+
+            {fetchedContent?.text && (
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(fetchedContent.text);
+                  if (textRef.current) {
+                    textRef.current?.select();
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 3000);
+                  }
+                }}
+                className="absolute right-2 top-7 flex cursor-pointer items-center gap-1 rounded-full border border-gray-300 bg-gray-100 px-2.5 py-1 text-xs text-gray-700 transition hover:bg-gray-200 md:right-4 md:top-8"
+              >
+                {copied ? (
+                  <>
+                    <Check className="text-gray-600 w-4! h-4!" />
+                    <span>Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <FileCopy className="text-gray-600 w-4! h-4!" />
+                    <span>Copy</span>
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-3 min-h-0 flex-1 overflow-hidden">
           {!fetchedContent?.files || fetchedContent.files.length === 0 ? (
-            <div className="w-full min-h-55 bg-gray-100 text-gray-600 flex justify-center items-center py-6 rounded-lg border border-dashed border-gray-300">
-              Shared files will appear here...
+            <div className="flex h-full min-h-36 flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-[linear-gradient(180deg,_#f7f7f4_0%,_#efefea_100%)] py-6 text-gray-600">
+              <DownloadForOfflineRounded
+                sx={{ fontSize: "2rem", color: "#7e7a72", marginBottom: "0.4rem" }}
+              />
+              <span>Shared files will appear here...</span>
             </div>
           ) : (
-            <div>
-              <h3 className="font-semibold mb-2 text-gray-700">Shared Files</h3>
+            <div className="flex h-full min-h-0 flex-col">
+              <h3 className="mb-2 font-semibold text-gray-700">Shared Files</h3>
 
-              <div className="space-y-3">
+              <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
                 {fetchedContent.files.map((file, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between bg-gray-100 p-3 rounded-lg"
+                    className="flex items-center justify-between rounded-xl border border-gray-200 bg-[linear-gradient(180deg,_#f6f6f3_0%,_#ecece7_100%)] p-3"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 overflow-hidden">
                       {getIcon(file.mimetype ?? "")}
-                      <span className="text-gray-700 text-sm">
+                      <span className="truncate text-sm text-gray-700">
                         {file.originalName}
                       </span>
                     </div>
@@ -173,7 +182,7 @@ const handleDownloadAll = () => {
                         handleDownload(file.url, file.originalName)
                       }
                       title="Download"
-                      className="px-1 py-1 text-sm text-[#452829] hover:text-[#3a2223] transition cursor-pointer"
+                      className="cursor-pointer px-1 py-1 text-sm text-[#452829] transition hover:text-[#3a2223]"
                     >
                       <DownloadRounded />
                     </button>
@@ -186,7 +195,7 @@ const handleDownloadAll = () => {
                   type="button"
                   title="Download All"
                   onClick={handleDownloadAll}
-                  className="mt-4 w-full py-2 bg-[#452829] text-white rounded-3xl font-semibold hover:bg-[#3a2223] transition cursor-pointer"
+                  className="mt-3 w-full cursor-pointer rounded-3xl bg-[linear-gradient(135deg,_#452829_0%,_#6b4d4e_100%)] py-2.5 font-semibold text-white shadow-[0_10px_18px_rgba(69,40,41,0.18)] transition hover:opacity-95"
                 >
                   Download All
                 </button>

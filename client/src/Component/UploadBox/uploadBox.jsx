@@ -2,15 +2,7 @@
 import React, { useState } from "react";
 import { showToast } from "@/utils/toast";
 
-import {
-  CloudUpload,
-  Cancel,
-  PictureAsPdf,
-  Image,
-  VideoFile,
-  MusicVideo,
-  FileCopy,
-} from "@mui/icons-material";
+import { CloudUpload, Cancel } from "@mui/icons-material";
 import { getIcon } from "@/utils/GetIcons";
 
 export const UploadBox = ({
@@ -20,6 +12,8 @@ export const UploadBox = ({
   limit = 5,
   formData = {},
   handleChange,
+  disableRemove = false,
+  removeDisabledMessage = "Please wait for the current upload to finish.",
   onkeyDown,
   style = {},
 }) => {
@@ -116,13 +110,18 @@ export const UploadBox = ({
               </div>
 
               <Cancel
-                onClick={() =>
+                onClick={() => {
+                  if (disableRemove) {
+                    showToast(removeDisabledMessage, "info", "top-center");
+                    return;
+                  }
+
                   handleChange(
                     name,
                     files.filter((_, i) => i !== index)
-                  )
-                }
-                className="cursor-pointer text-red-500"
+                  );
+                }}
+                className={`text-red-500 ${disableRemove ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
               />
             </li>
           ))}

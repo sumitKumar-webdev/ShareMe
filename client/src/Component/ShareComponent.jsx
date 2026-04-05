@@ -24,16 +24,25 @@ const ShareComponent = () => {
     if (loading) return;
 
     let loadingToastId = null;
+    let slowUploadTimer = null;
 
     try {
       setLoading(true);
       loadingToastId = showToast(
         "Uploading...",
         "default",
-        "bottom-right",
+        "top-center",
         null,
         true
       );
+
+      slowUploadTimer = setTimeout(() => {
+        showToast(
+          "Sharing is taking a bit longer because this is on the free tier. Please wait a few seconds.",
+          "info",
+          "top-center"
+        );
+      }, 5000);
 
       const fd = new FormData();
       if (formData.text) fd.append("text", formData.text);
@@ -52,7 +61,7 @@ const ShareComponent = () => {
         showToast(
           "Uploaded successfully",
           "success",
-          "bottom-right",
+          "top-center",
           loadingToastId,
           false
         );
@@ -64,11 +73,15 @@ const ShareComponent = () => {
       showToast(
         "Error in uploading",
         "error",
-        "bottom-right",
+        "top-center",
         loadingToastId,
         false
       );
     } finally {
+      if (slowUploadTimer) {
+        clearTimeout(slowUploadTimer);
+      }
+
       setLoading(false);
     }
   };
@@ -134,6 +147,8 @@ const ShareComponent = () => {
             limit={5}
             formData={formData}
             handleChange={handleChange}
+            disableRemove={loading}
+            removeDisabledMessage="Please wait for sharing to finish before changing the selected files."
             onkeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();

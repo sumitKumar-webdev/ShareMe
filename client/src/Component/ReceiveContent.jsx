@@ -119,7 +119,7 @@ const ReceiveContent = () => {
               placeholder="Shared text will appear here..."
               readOnly
               ref={textRef}
-              style={{ rows: 4 }}
+               style={{ rows: 4, maxHeight: 140 }}
             />
 
             {fetchedContent?.text && (
@@ -163,7 +163,7 @@ const ReceiveContent = () => {
             <div className="flex h-full min-h-0 flex-col">
               <h3 className="mb-2 font-semibold text-gray-700">Shared Files</h3>
 
-              <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
+              <div className="thin-themed-scrollbar min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
                 {fetchedContent.files.map((file, idx) => (
                   <div
                     key={idx}

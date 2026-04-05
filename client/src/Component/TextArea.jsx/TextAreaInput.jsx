@@ -1,37 +1,58 @@
 import React from "react";
 
-const TextAreaInput = ({
-  name,
-  label,
-  placeholder = "",
-  i,
-  formData,
-  handleChange,
-  value,
-  onkeyDown,
-  readOnly = false,
-  style = {},
-  id,
-  ref,
-}) => {
+const TextAreaInput = React.forwardRef(function TextAreaInput(
+  {
+    name,
+    label,
+    placeholder = "",
+    i,
+    formData,
+    handleChange,
+    value,
+    onkeyDown,
+    readOnly = false,
+    style = {},
+    id,
+  },
+  forwardedRef
+) {
+  const innerRef = React.useRef(null);
+  const textValue = value ?? formData?.[name] ?? "";
+  const maxHeight = style.maxHeight ?? 220;
+
+  React.useImperativeHandle(forwardedRef, () => innerRef.current);
+
+  React.useLayoutEffect(() => {
+    const textarea = innerRef.current;
+
+    if (!textarea) return;
+
+    textarea.style.height = "auto";
+    const nextHeight = Math.min(textarea.scrollHeight, maxHeight);
+    textarea.style.height = `${nextHeight}px`;
+    textarea.style.overflowY =
+      textarea.scrollHeight > maxHeight ? "auto" : "hidden";
+  }, [textValue, maxHeight]);
+
   return (
     <div key={i} className="col-span-1 sm:col-span-2">
-      <label className="block mb-1 font-medium text-xs md:text-base text-gray-700">{label}</label>
+      <label className="mb-1 block text-xs font-medium text-gray-700 md:text-base">
+        {label}
+      </label>
       <textarea
         id={id}
-        ref={ref}
+        ref={innerRef}
         name={name}
         placeholder={placeholder}
         readOnly={readOnly}
-        value={value || formData?.[name] || ""}
-        onChange={(e) => handleChange(name, e.target.value)}
-        // onBlur={handleBlur(field)}
+        value={textValue}
+        onChange={(e) => handleChange?.(name, e.target.value)}
         rows={style.rows || 5}
         onKeyDown={onkeyDown}
-        className="min-h-[50px] border border-gray-300 rounded-lg p-2 w-full hover:border-black focus:border-blue-600 outline-none md:min-h-[96px]"
+        className="thin-themed-scrollbar min-h-[50px] w-full rounded-lg border border-gray-300 p-2 outline-none transition hover:border-black focus:border-blue-600 md:min-h-[96px] resize-none"
       />
     </div>
   );
-};
+});
 
 export default TextAreaInput;

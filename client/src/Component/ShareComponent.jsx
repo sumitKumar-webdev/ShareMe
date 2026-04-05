@@ -125,14 +125,14 @@ const ShareComponent = () => {
         className="flex min-h-0 flex-1 flex-col rounded-xl border border-[#452829]/8 bg-[linear-gradient(180deg,_#fffdfa_0%,_#ffffff_100%)] p-4 shadow-md md:p-5"
         onSubmit={handleSubmit}
       >
-        <div className="grid min-h-0 flex-1 gap-3">
+        <div className="thin-themed-scrollbar grid min-h-0 flex-1 gap-3 overflow-y-auto pr-1">
           <TextAreaInput
             name="text"
             label="Enter Text to Share"
             placeholder="Write something..."
             formData={formData}
             handleChange={handleChange}
-            style={{ rows: 4 }}
+            style={{ rows: 4, maxHeight: 160 }}
             onkeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();

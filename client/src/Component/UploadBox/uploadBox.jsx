@@ -98,7 +98,7 @@ export const UploadBox = ({
       </div>
 
       {files.length > 0 && (
-        <ul className="mt-2 space-y-1">
+        <ul className="thin-themed-scrollbar mt-2 max-h-28 space-y-1 overflow-y-auto pr-1 md:max-h-36">
           {files.map((file, index) => (
             <li
               key={index}

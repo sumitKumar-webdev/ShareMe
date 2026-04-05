@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .thin-themed-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(108, 82, 72, 0.72) transparent;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar-track {
+    border-radius: 9999px;
+    background: transparent;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar-track-piece {
+    background: transparent;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    background: linear-gradient(180deg, #9a7b6d 0%, #6c5248 100%);
+    background-clip: padding-box;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #87695d 0%, #59433b 100%);
+    background-clip: padding-box;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .thin-themed-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}

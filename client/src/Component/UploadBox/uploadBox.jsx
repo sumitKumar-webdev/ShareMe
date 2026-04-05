@@ -23,10 +23,10 @@ export const UploadBox = ({
   const handleUpload = (newFiles) => {
     const combined = [...files, ...newFiles];
     const uniqueFiles = Array.from(
-      new Map(combined.map((f) => [f.name, f])).values()
+      new Map(combined.map((f) => [f.name, f])).values(),
     );
     if (uniqueFiles.length > limit) {
-      showToast(`Only ${limit} files allowed`, "warning");
+      showToast(`Only ${limit} files allowed`, "warning", "top-center");
       return uniqueFiles.slice(0, limit);
     }
     return uniqueFiles;
@@ -34,7 +34,9 @@ export const UploadBox = ({
 
   return (
     <div key={i} className="col-span-1 sm:col-span-2">
-      <label className="block mb-1 font-medium text-xs md:text-base text-gray-700">{label}</label>
+      <label className="block mb-1 font-medium text-xs md:text-base text-gray-700">
+        {label}
+      </label>
 
       <div
         onDragOver={(e) => {
@@ -81,7 +83,7 @@ export const UploadBox = ({
         >
           {!isDragOver ? (
             <div className="flex flex-col items-center cursor-pointer">
-              <CloudUpload sx={{fontSize:{md:"3rem"}}} />
+              <CloudUpload sx={{ fontSize: { md: "3rem" } }} />
               <span className="mt-2 font-medium text-xs md:text-base">
                 Upload up to {limit} files or drag and drop
               </span>
@@ -98,13 +100,13 @@ export const UploadBox = ({
       </div>
 
       {files.length > 0 && (
-        <ul className="thin-themed-scrollbar mt-2 max-h-28 space-y-1 overflow-y-auto pr-1 md:max-h-36">
+        <ul className="mt-2 space-y-1">
           {files.map((file, index) => (
             <li
               key={index}
               className="text-sm flex items-center justify-between bg-gray-100 px-3 py-1 rounded"
             >
-              <div className="flex justify-center items-center">
+              <div className="flex min-w-0 items-center">
                 <span className="mr-2">{getIcon(file.type)}</span>
                 <span className="block w-70 truncate">{file.name}</span>
               </div>
@@ -118,7 +120,7 @@ export const UploadBox = ({
 
                   handleChange(
                     name,
-                    files.filter((_, i) => i !== index)
+                    files.filter((_, i) => i !== index),
                   );
                 }}
                 className={`text-red-500 ${disableRemove ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
